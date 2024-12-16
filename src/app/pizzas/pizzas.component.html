@@ -1,0 +1,43 @@
+<h2 class="title-header-pizza">Design Your Pizzas</h2>
+
+<!-- Design Pizza Section  -->
+<div>
+  <h3 style="margin: 5px;">{{ editingPizzaId ? 'Edit Pizza' : 'Add New Pizza' }}</h3>
+  <mat-form-field>
+    <mat-label>Enter pizza name</mat-label>
+    <input [(ngModel)]="newPizzaName" matInput placeholder="Enter pizza name" class="form-input">
+  </mat-form-field>
+  <br>
+
+  <h4 style="margin: 5px;">Select Toppings:</h4>
+  <div class="topping-checkbox" *ngFor="let topping of toppingsList">
+    <label>
+      <mat-checkbox style="transform: scale(0.8); transform-origin: center left;"
+        (change)="toggleTopping(topping.id!)"
+        [checked]="selectedToppings.includes(topping.id!)"
+      />
+      {{ topping.name }}
+    </label>
+  </div>
+  <br>
+  <button mat-flat-button class="add-update-button" (click)="savePizza()">
+    {{ editingPizzaId ? 'Update Pizza' : 'Add Pizza' }}
+  </button>
+  <button mat-flat-button class="cancel-button" *ngIf="editingPizzaId" (click)="clearForm()">Cancel</button>
+</div>
+
+<br/>
+<mat-divider class="divider-style"></mat-divider>
+
+<!-- Render Created Pizzas -->
+<h3 class="created-title">Your Pizzas Created</h3>
+<ul>
+  <li *ngFor="let pizza of pizzas">
+    <strong style="font-family: 'Brush Script MT', cursive; font-size: 30px;">{{ pizza.name }}</strong> -
+    <i><b>Toppings: </b></i> <small class="topping-list">{{ getToppingNames(pizza.toppings) }}</small>
+    <br>
+    <button mat-flat-button class="designed-pizza-edit" (click)="editPizza(pizza)">Edit</button>
+    <button mat-flat-button class="designed-pizza-delete" (click)="deletePizza(pizza.id!)">Delete</button>
+    <br><br>
+  </li>
+</ul>

@@ -1,0 +1,37 @@
+<h2 class="title-heading">Manage Your Toppings</h2>
+
+<!-- Input Field for New Topping -->
+<div>
+  <mat-form-field>
+    <mat-label>Enter topping name</mat-label>
+    <input [(ngModel)]="newTopping" matInput placeholder="Ex. Cheese">
+  </mat-form-field>
+  <button mat-flat-button class="add-button" (click)="addTopping()">Add Topping</button>
+</div>
+
+<!-- Display List of Toppings -->
+<ul>
+  <li *ngFor="let topping of toppings">
+    <!-- Display in Edit Mode -->
+    <div *ngIf="editingToppingId === topping.id">
+      <br>
+      <mat-form-field style="width: 40%;">
+        <mat-label>Edit topping</mat-label>
+        <input [(ngModel)]="editedToppingName" matInput placeholder="Ex. Cheese">
+      </mat-form-field>
+      <button mat-flat-button class="save-button" (click)="saveEditedTopping()">Save</button>
+      <button mat-flat-button class="cancel-button" (click)="cancelEdit()">Cancel</button>
+    </div>
+
+    <!-- View Mode -->
+    <div *ngIf="editingToppingId !== topping.id" style="font-family: 'bradley hand', cursive; font-size: 20px;">
+      {{ topping.name }}
+      <button mat-flat-button class="edit-button" (click)="startEditing(topping)">Edit</button>
+      <button mat-flat-button class="delete-button" (click)="deleteTopping(topping.id!)">Delete</button>      
+    </div>
+  </li>
+</ul>
+
+<!-- Message if there is no toppings -->
+<p *ngIf="toppings.length === 0">No toppings available.</p>
+
